@@ -1,0 +1,211 @@
+.clubs-container {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    .search-container {
+      position: relative;
+      
+      .search-input {
+        padding: 0.75rem 1rem 0.75rem 2.5rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        width: 300px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        
+        &:focus {
+          outline: none;
+          border-color: #FF4D00;
+          box-shadow: 0 0 0 2px rgba(255, 77, 0, 0.1);
+        }
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+      }
+    }
+
+    .btn-new {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, #FF4D00 0%, #FF6B00 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(255, 77, 0, 0.2);
+      }
+
+      i {
+        font-size: 0.875rem;
+      }
+    }
+  }
+
+  .loading-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 4rem;
+    color: #666;
+
+    i {
+      color: #FF4D00;
+    }
+  }
+
+  .clubs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+
+    .club-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      .club-info {
+        h3 {
+          margin: 0 0 1rem;
+          font-size: 1.25rem;
+          color: #2A2A2A;
+        }
+
+        .club-details {
+          margin-bottom: 1rem;
+          
+          p {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.875rem;
+
+            i {
+              color: #00C2FF;
+              width: 16px;
+            }
+
+            &.membres i {
+              color: #FF4D00;
+            }
+          }
+        }
+
+        .contact-info {
+          p {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.875rem;
+
+            i {
+              color: #FF4D00;
+              width: 16px;
+            }
+          }
+        }
+      }
+
+      .club-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        .btn-icon {
+          width: 32px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          color: white;
+
+          &:not(.delete) {
+            background: #00C2FF;
+
+            &:hover {
+              background: darken(#00C2FF, 10%);
+            }
+          }
+
+          &.delete {
+            background: #dc3545;
+
+            &:hover {
+              background: darken(#dc3545, 10%);
+            }
+          }
+
+          i {
+            font-size: 0.875rem;
+          }
+        }
+      }
+    }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #f8f8f8;
+    border-radius: 12px;
+    border: 2px dashed #e0e0e0;
+
+    .empty-icon {
+      font-size: 3rem;
+      color: #999;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-primary {
+      padding: 0.75rem 1.5rem;
+      background: #FF4D00;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: darken(#FF4D00, 10%);
+      }
+    }
+  }
+}

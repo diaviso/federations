@@ -1,0 +1,73 @@
+<div class="federation-details" *ngIf="!loading && federation">
+  <!-- Header -->
+  <div class="federation-header">
+    <div class="federation-info">
+      <img [src]="federation.logo_url || '../../../assets/images/default-federation-logo.svg'" 
+           [alt]="federation.nom"
+           class="federation-logo">
+      <div class="federation-title">
+        <h1>{{ federation.nom }}</h1>
+        <p class="description">{{ federation.description }}</p>
+      </div>
+    </div>
+    <div class="federation-actions">
+      <button class="btn-edit" [routerLink]="['/federations/edit', federation.id]">
+        <i class="fas fa-edit"></i>
+        Modifier
+      </button>
+    </div>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <nav class="federation-nav">
+    <ul>
+      <li [class.active]="activeTab === 'dashboard'">
+        <a [routerLink]="['./dashboard']" (click)="setActiveTab('dashboard')">
+          <i class="fas fa-chart-line"></i>
+          Tableau de bord
+        </a>
+      </li>
+      <li [class.active]="activeTab === 'ligues'">
+        <a [routerLink]="['./ligues']" (click)="setActiveTab('ligues')">
+          <i class="fas fa-sitemap"></i>
+          Ligues
+        </a>
+      </li>
+      <li [class.active]="activeTab === 'clubs'">
+        <a [routerLink]="['./clubs']" (click)="setActiveTab('clubs')">
+          <i class="fas fa-shield-alt"></i>
+          Clubs
+        </a>
+      </li>
+      <li [class.active]="activeTab === 'licences'">
+        <a [routerLink]="['./licences']" (click)="setActiveTab('licences')">
+          <i class="fas fa-id-card"></i>
+          Licences
+        </a>
+      </li>
+      <li [class.active]="activeTab === 'competitions'">
+        <a [routerLink]="['./competitions']" (click)="setActiveTab('competitions')">
+          <i class="fas fa-trophy"></i>
+          Compétitions
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Content Area -->
+  <div class="content-area">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<!-- Loading State -->
+<div class="loading-state" *ngIf="loading">
+  <i class="fas fa-spinner fa-spin"></i>
+  Chargement...
+</div>
+
+<!-- Error State -->
+<div class="error-state" *ngIf="error">
+  <i class="fas fa-exclamation-circle"></i>
+  {{ error }}
+</div>

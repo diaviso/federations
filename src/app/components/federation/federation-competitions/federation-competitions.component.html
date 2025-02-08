@@ -1,0 +1,89 @@
+<div class="competitions-container">
+  <div class="header">
+    <div class="filters">
+      <div class="search-container">
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm" 
+          (ngModelChange)="onSearch()"
+          placeholder="Rechercher une compétition..."
+          class="search-input"
+        >
+        <i class="fas fa-search search-icon"></i>
+      </div>
+      <select [(ngModel)]="filterStatus" (change)="onFilterChange()" class="status-filter">
+        <option value="all">Tous les statuts</option>
+        <option value="a_venir">À venir</option>
+        <option value="inscription">Inscriptions ouvertes</option>
+        <option value="en_cours">En cours</option>
+        <option value="termine">Terminées</option>
+        <option value="annule">Annulées</option>
+      </select>
+    </div>
+    <button class="btn-new" (click)="onCreateCompetition()">
+      <i class="fas fa-plus"></i>
+      Nouvelle Compétition
+    </button>
+  </div>
+
+  <div class="loading-state" *ngIf="loading">
+    <i class="fas fa-spinner fa-spin"></i>
+    Chargement des compétitions...
+  </div>
+
+  <div class="competitions-grid" *ngIf="!loading">
+    <div class="competition-card" *ngFor="let competition of competitions" (click)="onViewDetails(competition.id)">
+      <div class="competition-header">
+        <div class="competition-type">
+          <i class="fas" [class.fa-trophy]="competition.type === 'championnat'" [class.fa-medal]="competition.type === 'coupe'"></i>
+          {{ competition.type === 'championnat' ? 'Championnat' : 'Coupe' }}
+        </div>
+        <span [class]="'status-badge ' + getStatusClass(competition.statut)">
+          {{ getStatusLabel(competition.statut) }}
+        </span>
+      </div>
+
+      <div class="competition-info">
+        <h3>{{ competition.nom }}</h3>
+        
+        <div class="details">
+          <p class="date">
+            <i class="fas fa-calendar"></i>
+            Du {{ competition.dateDebut | date:'dd/MM/yyyy' }} au {{ competition.dateFin | date:'dd/MM/yyyy' }}
+          </p>
+          <p class="location">
+            <i class="fas fa-map-marker-alt"></i>
+            {{ competition.lieu }}
+          </p>
+          <p class="participants">
+            <i class="fas fa-users"></i>
+            {{ competition.participants }} participants
+          </p>
+        </div>
+
+        <div class="categories">
+          <span class="category-tag" *ngFor="let category of competition.categories">
+            {{ category }}
+          </span>
+        </div>
+      </div>
+
+      <div class="competition-actions">
+        <button class="btn-icon" (click)="onEditCompetition(competition.id); $event.stopPropagation()">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn-icon delete" (click)="onDeleteCompetition(competition.id); $event.stopPropagation()">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="competitions.length === 0">
+      <i class="fas fa-trophy empty-icon"></i>
+      <p>Aucune compétition trouvée</p>
+      <button class="btn-primary" (click)="onCreateCompetition()">
+        Créer une compétition
+      </button>
+    </div>
+  </div>
+</div>

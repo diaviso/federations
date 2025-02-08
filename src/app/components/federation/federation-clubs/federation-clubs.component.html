@@ -1,0 +1,55 @@
+<div class="clubs-container">
+  <div class="header">
+    <div class="search-container">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        (ngModelChange)="onSearch()"
+        placeholder="Rechercher un club..."
+        class="search-input"
+      >
+      <i class="fas fa-search search-icon"></i>
+    </div>
+    <button class="btn-new" (click)="onCreateClub()">
+      <i class="fas fa-plus"></i>
+      Nouveau Club
+    </button>
+  </div>
+
+  <div class="loading-state" *ngIf="loading">
+    <i class="fas fa-spinner fa-spin"></i>
+    Chargement des clubs...
+  </div>
+
+  <div class="clubs-grid" *ngIf="!loading">
+    <div class="club-card" *ngFor="let club of clubs">
+      <div class="club-info">
+        <h3>{{ club.nom }}</h3>
+        <div class="club-details">
+          <p class="ligue"><i class="fas fa-sitemap"></i> {{ club.ligue }}</p>
+          <p class="membres"><i class="fas fa-users"></i> {{ club.membres }} membres</p>
+        </div>
+        <div class="contact-info">
+          <p><i class="fas fa-user"></i> {{ club.president }}</p>
+          <p><i class="fas fa-envelope"></i> {{ club.email }}</p>
+        </div>
+      </div>
+      <div class="club-actions">
+        <button class="btn-icon" (click)="onEditClub(club.id)">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn-icon delete" (click)="onDeleteClub(club.id)">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="clubs.length === 0">
+      <i class="fas fa-shield-alt empty-icon"></i>
+      <p>Aucun club trouvé</p>
+      <button class="btn-primary" (click)="onCreateClub()">
+        Créer un club
+      </button>
+    </div>
+  </div>
+</div>

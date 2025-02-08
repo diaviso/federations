@@ -1,0 +1,217 @@
+.licences-container {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    .filters {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+
+      .search-container {
+        position: relative;
+        
+        .search-input {
+          padding: 0.75rem 1rem 0.75rem 2.5rem;
+          border: 1px solid #e0e0e0;
+          border-radius: 8px;
+          width: 300px;
+          font-size: 1rem;
+          transition: all 0.3s ease;
+          
+          &:focus {
+            outline: none;
+            border-color: #FF4D00;
+            box-shadow: 0 0 0 2px rgba(255, 77, 0, 0.1);
+          }
+        }
+
+        .search-icon {
+          position: absolute;
+          left: 1rem;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #666;
+        }
+      }
+
+      .status-filter {
+        padding: 0.75rem 1rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1rem;
+        color: #2A2A2A;
+        background: white;
+        cursor: pointer;
+
+        &:focus {
+          outline: none;
+          border-color: #FF4D00;
+        }
+      }
+    }
+
+    .btn-new {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, #FF4D00 0%, #FF6B00 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(255, 77, 0, 0.2);
+      }
+
+      i {
+        font-size: 0.875rem;
+      }
+    }
+  }
+
+  .loading-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 4rem;
+    color: #666;
+
+    i {
+      color: #FF4D00;
+    }
+  }
+
+  .licences-table {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th, td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+
+      th {
+        background: #f8f8f8;
+        font-weight: 600;
+        color: #2A2A2A;
+      }
+
+      td {
+        color: #666;
+        font-size: 0.875rem;
+
+        &.actions {
+          width: 100px;
+          white-space: nowrap;
+        }
+      }
+
+      .status-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+
+        &.status-active {
+          background: #e6fff0;
+          color: #00b341;
+        }
+
+        &.status-pending {
+          background: #fff5e6;
+          color: #ff8c00;
+        }
+
+        &.status-expired {
+          background: #ffe6e6;
+          color: #dc3545;
+        }
+      }
+
+      .btn-icon {
+        width: 32px;
+        height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        color: white;
+        margin-right: 0.5rem;
+
+        &:not(.delete) {
+          background: #00C2FF;
+
+          &:hover {
+            background: darken(#00C2FF, 10%);
+          }
+        }
+
+        &.delete {
+          background: #dc3545;
+
+          &:hover {
+            background: darken(#dc3545, 10%);
+          }
+        }
+
+        i {
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #f8f8f8;
+    border-radius: 12px;
+    border: 2px dashed #e0e0e0;
+
+    .empty-icon {
+      font-size: 3rem;
+      color: #999;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-primary {
+      padding: 0.75rem 1.5rem;
+      background: #FF4D00;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: darken(#FF4D00, 10%);
+      }
+    }
+  }
+}

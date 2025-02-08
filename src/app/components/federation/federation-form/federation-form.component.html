@@ -1,0 +1,150 @@
+<div class="federation-form-container">
+  <div class="form-header">
+    <h1>{{ isEditMode ? 'Modifier la Fédération' : 'Nouvelle Fédération' }}</h1>
+    <div class="header-actions">
+      <button class="btn-secondary" (click)="onCancel()">
+        <i class="fas fa-times"></i>
+        Annuler
+      </button>
+      <button class="btn-primary" (click)="onSubmit()" [disabled]="federationForm.invalid || loading">
+        <i class="fas fa-save"></i>
+        {{ isEditMode ? 'Enregistrer' : 'Créer' }}
+      </button>
+    </div>
+  </div>
+
+  <div class="error-message" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <div class="loading-spinner" *ngIf="loading">
+    <i class="fas fa-spinner fa-spin"></i>
+    Chargement...
+  </div>
+
+  <form [formGroup]="federationForm" class="federation-form" *ngIf="!loading">
+    <div class="form-grid">
+      <!-- Logo Upload Section -->
+      <div class="logo-section">
+        <div class="logo-preview" 
+             [class.has-logo]="previewUrl"
+             (click)="logoInput.click()">
+          <img *ngIf="previewUrl" [src]="previewUrl" alt="Logo preview">
+          <div class="upload-placeholder" *ngIf="!previewUrl">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <span>Cliquez pour ajouter un logo</span>
+          </div>
+        </div>
+        <input
+          #logoInput
+          type="file"
+          accept="image/*"
+          style="display: none"
+          (change)="onLogoSelected($event)"
+        >
+        <p class="logo-help">Format: JPG, PNG. Taille max: 2MB</p>
+      </div>
+
+      <!-- Basic Information -->
+      <div class="form-section">
+        <h2>Informations Générales</h2>
+        
+        <div class="form-field">
+          <label for="nom">Nom de la Fédération*</label>
+          <input
+            id="nom"
+            type="text"
+            formControlName="nom"
+            [class.invalid]="federationForm.get('nom')?.invalid && federationForm.get('nom')?.touched"
+          >
+          <div class="error-text" *ngIf="federationForm.get('nom')?.invalid && federationForm.get('nom')?.touched">
+            {{ getErrorMessage('nom') }}
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="description">Description*</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            rows="4"
+            [class.invalid]="federationForm.get('description')?.invalid && federationForm.get('description')?.touched"
+          ></textarea>
+          <div class="error-text" *ngIf="federationForm.get('description')?.invalid && federationForm.get('description')?.touched">
+            {{ getErrorMessage('description') }}
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="date_creation">Date de Création*</label>
+          <input
+            id="date_creation"
+            type="date"
+            formControlName="date_creation"
+            [class.invalid]="federationForm.get('date_creation')?.invalid && federationForm.get('date_creation')?.touched"
+          >
+          <div class="error-text" *ngIf="federationForm.get('date_creation')?.invalid && federationForm.get('date_creation')?.touched">
+            {{ getErrorMessage('date_creation') }}
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="president">Président(e)*</label>
+          <input
+            id="president"
+            type="text"
+            formControlName="president"
+            [class.invalid]="federationForm.get('president')?.invalid && federationForm.get('president')?.touched"
+          >
+          <div class="error-text" *ngIf="federationForm.get('president')?.invalid && federationForm.get('president')?.touched">
+            {{ getErrorMessage('president') }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Information -->
+      <div class="form-section">
+        <h2>Informations de Contact</h2>
+        
+        <div class="form-field">
+          <label for="contact_email">Email*</label>
+          <input
+            id="contact_email"
+            type="email"
+            formControlName="contact_email"
+            [class.invalid]="federationForm.get('contact_email')?.invalid && federationForm.get('contact_email')?.touched"
+          >
+          <div class="error-text" *ngIf="federationForm.get('contact_email')?.invalid && federationForm.get('contact_email')?.touched">
+            {{ getErrorMessage('contact_email') }}
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="contact_telephone">Téléphone*</label>
+          <input
+            id="contact_telephone"
+            type="tel"
+            formControlName="contact_telephone"
+            [class.invalid]="federationForm.get('contact_telephone')?.invalid && federationForm.get('contact_telephone')?.touched"
+          >
+          <div class="error-text" *ngIf="federationForm.get('contact_telephone')?.invalid && federationForm.get('contact_telephone')?.touched">
+            {{ getErrorMessage('contact_telephone') }}
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="adresse">Adresse*</label>
+          <textarea
+            id="adresse"
+            formControlName="adresse"
+            rows="3"
+            [class.invalid]="federationForm.get('adresse')?.invalid && federationForm.get('adresse')?.touched"
+          ></textarea>
+          <div class="error-text" *ngIf="federationForm.get('adresse')?.invalid && federationForm.get('adresse')?.touched">
+            {{ getErrorMessage('adresse') }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

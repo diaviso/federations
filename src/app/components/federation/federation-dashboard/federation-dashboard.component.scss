@@ -1,0 +1,102 @@
+.dashboard-container {
+  position: relative;
+  min-height: 400px;
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+
+    .stat-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      .stat-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: #FF4D00;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+      }
+
+      .stat-info {
+        h3 {
+          margin: 0;
+          color: #666;
+          font-size: 0.875rem;
+          font-weight: 500;
+        }
+
+        .stat-value {
+          margin: 0;
+          font-size: 1.5rem;
+          font-weight: 600;
+          color: #2A2A2A;
+        }
+      }
+    }
+  }
+
+  .dashboard-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+
+    .section {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+      h2 {
+        margin: 0 0 1rem;
+        font-size: 1.25rem;
+        color: #2A2A2A;
+      }
+
+      .placeholder {
+        color: #666;
+        text-align: center;
+        padding: 2rem;
+        background: #f8f8f8;
+        border-radius: 8px;
+        font-style: italic;
+      }
+    }
+  }
+
+  .loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 1.125rem;
+    color: #666;
+
+    i {
+      font-size: 1.5rem;
+      color: #FF4D00;
+    }
+  }
+}

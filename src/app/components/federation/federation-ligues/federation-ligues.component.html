@@ -1,0 +1,51 @@
+<div class="ligues-container">
+  <div class="header">
+    <div class="search-container">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        (ngModelChange)="onSearch()"
+        placeholder="Rechercher une ligue..."
+        class="search-input"
+      >
+      <i class="fas fa-search search-icon"></i>
+    </div>
+    <button class="btn-new" (click)="onCreateLigue()">
+      <i class="fas fa-plus"></i>
+      Nouvelle Ligue
+    </button>
+  </div>
+
+  <div class="loading-state" *ngIf="loading">
+    <i class="fas fa-spinner fa-spin"></i>
+    Chargement des ligues...
+  </div>
+
+  <div class="ligues-grid" *ngIf="!loading">
+    <div class="ligue-card" *ngFor="let ligue of ligues">
+      <div class="ligue-info">
+        <h3>{{ ligue.nom }}</h3>
+        <div class="contact-info">
+          <p><i class="fas fa-user"></i> {{ ligue.president }}</p>
+          <p><i class="fas fa-envelope"></i> {{ ligue.email }}</p>
+        </div>
+      </div>
+      <div class="ligue-actions">
+        <button class="btn-icon" (click)="onEditLigue(ligue.id)">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn-icon delete" (click)="onDeleteLigue(ligue.id)">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="ligues.length === 0">
+      <i class="fas fa-sitemap empty-icon"></i>
+      <p>Aucune ligue trouvée</p>
+      <button class="btn-primary" (click)="onCreateLigue()">
+        Créer une ligue
+      </button>
+    </div>
+  </div>
+</div>
