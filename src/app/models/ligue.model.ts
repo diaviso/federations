@@ -1,13 +1,15 @@
 export interface Ligue {
-  id?: number;
+  id: number;
+  federation_id: number;
   nom: string;
   description: string;
-  federation_id: number;
+  date_creation?: Date;
   president: string;
-  contact_email: string;
-  contact_telephone: string;
-  region: string;
+  logo_url?: string;
+  email: string;
+  telephone: string;
+  adresse: string;
+  code_postal: string;
   created_at?: Date;
   updated_at?: Date;
-  logo_url?: string;
 }

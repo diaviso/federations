@@ -44,6 +44,11 @@ export const routes: Routes = [
               .then(m => m.FederationLiguesComponent)
           },
           {
+            path: 'ligues/new',
+            loadComponent: () => import('./components/federation/federation-ligues/ligue-form/ligue-form.component')
+              .then(m => m.LigueFormComponent)
+          },
+          {
             path: 'clubs',
             loadComponent: () => import('./components/federation/federation-clubs/federation-clubs.component')
               .then(m => m.FederationClubsComponent)

@@ -10,7 +10,7 @@
       >
       <i class="fas fa-search search-icon"></i>
     </div>
-    <button class="btn-new" (click)="onCreateLigue()">
+    <button class="btn-new" [routerLink]="['new']">
       <i class="fas fa-plus"></i>
       Nouvelle Ligue
     </button>
@@ -21,20 +21,56 @@
     Chargement des ligues...
   </div>
 
-  <div class="ligues-grid" *ngIf="!loading">
+  <div class="error-state" *ngIf="error">
+    <i class="fas fa-exclamation-circle"></i>
+    {{ error }}
+  </div>
+
+  <div class="ligues-grid" *ngIf="!loading && !error">
     <div class="ligue-card" *ngFor="let ligue of ligues">
+      <div class="ligue-header">
+        <div class="ligue-logo">
+          <img [src]="ligue.logo_url || '../../../assets/images/default-ligue-logo.svg'" 
+               [alt]="ligue.nom"
+               class="logo-image">
+        </div>
+        <div class="ligue-title">
+          <h3>{{ ligue.nom }}</h3>
+          <span class="region">{{ ligue.ville }}</span>
+        </div>
+      </div>
+
       <div class="ligue-info">
-        <h3>{{ ligue.nom }}</h3>
+        <p class="description">{{ ligue.description }}</p>
+        
         <div class="contact-info">
           <p><i class="fas fa-user"></i> {{ ligue.president }}</p>
           <p><i class="fas fa-envelope"></i> {{ ligue.email }}</p>
+          <p><i class="fas fa-phone"></i> {{ ligue.telephone }}</p>
+          <p><i class="fas fa-map-marker-alt"></i> {{ ligue.adresse }}, {{ ligue.code_postal }} {{ ligue.ville }}</p>
+          <p *ngIf="ligue.site_web">
+            <i class="fas fa-globe"></i>
+            <a [href]="ligue.site_web" target="_blank" rel="noopener noreferrer">{{ ligue.site_web }}</a>
+          </p>
+        </div>
+
+        <div class="stats">
+          <div class="stat-item">
+            <span class="value">3</span>
+            <span class="label">Clubs</span>
+          </div>
+          <div class="stat-item">
+            <span class="value">12</span>
+            <span class="label">Licenciés</span>
+          </div>
         </div>
       </div>
+
       <div class="ligue-actions">
-        <button class="btn-icon" (click)="onEditLigue(ligue.id)">
+        <button class="btn-icon" (click)="onEdit(ligue.id)">
           <i class="fas fa-edit"></i>
         </button>
-        <button class="btn-icon delete" (click)="onDeleteLigue(ligue.id)">
+        <button class="btn-icon delete" (click)="onDelete(ligue.id)">
           <i class="fas fa-trash"></i>
         </button>
       </div>
@@ -43,7 +79,7 @@
     <div class="empty-state" *ngIf="ligues.length === 0">
       <i class="fas fa-sitemap empty-icon"></i>
       <p>Aucune ligue trouvée</p>
-      <button class="btn-primary" (click)="onCreateLigue()">
+      <button class="btn-primary" [routerLink]="['new']">
         Créer une ligue
       </button>
     </div>

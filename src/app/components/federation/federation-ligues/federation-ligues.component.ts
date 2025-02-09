@@ -1,57 +1,107 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { LigueService, Ligue } from '../../../services/ligue.service';
+import { catchError, debounceTime, distinctUntilChanged, of, Subject, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-federation-ligues',
   templateUrl: './federation-ligues.component.html',
   styleUrls: ['./federation-ligues.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, RouterModule]
 })
 export class FederationLiguesComponent implements OnInit {
   federationId: number = 0;
-  ligues: any[] = []; // TODO: Create Ligue interface
+  ligues: Ligue[] = [];
   loading = true;
+  error: string | null = null;
   searchTerm = '';
+  private searchSubject = new Subject<string>();
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private ligueService: LigueService
+  ) {
+    // Configuration de la recherche avec debounce
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(term => {
+        if (!term.trim()) {
+          return this.ligueService.getLiguesByFederation(this.federationId);
+        }
+        return this.ligueService.searchLigues(this.federationId, term);
+      })
+    ).subscribe({
+      next: (ligues) => {
+        this.ligues = ligues;
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Erreur lors de la recherche:', error);
+        this.error = 'Erreur lors de la recherche des ligues';
+        this.loading = false;
+      }
+    });
+  }
 
   ngOnInit(): void {
     const id = Number(this.route.parent?.snapshot.paramMap.get('id'));
     if (id) {
       this.federationId = id;
       this.loadLigues();
+    } else {
+      this.error = 'ID de fédération non trouvé';
+      this.loading = false;
     }
   }
 
   private loadLigues(): void {
-    // TODO: Implement ligue service
-    // Mock data for now
-    setTimeout(() => {
-      this.ligues = [
-        { id: 1, nom: 'Ligue Île-de-France', president: 'Jean Dupont', email: 'contact@ligueidf.fr' },
-        { id: 2, nom: 'Ligue Auvergne-Rhône-Alpes', president: 'Marie Martin', email: 'contact@ligueara.fr' },
-        { id: 3, nom: 'Ligue Occitanie', president: 'Pierre Durand', email: 'contact@ligueoccitanie.fr' }
-      ];
-      this.loading = false;
-    }, 1000);
+    this.loading = true;
+    this.error = null;
+
+    this.ligueService.getLiguesByFederation(this.federationId)
+      .pipe(
+        catchError(error => {
+          console.error('Erreur lors du chargement des ligues:', error);
+          this.error = 'Erreur lors du chargement des ligues';
+          return of([]);
+        })
+      )
+      .subscribe(ligues => {
+        this.ligues = ligues;
+        this.loading = false;
+      });
   }
 
   onSearch(): void {
-    // TODO: Implement search
+    this.searchSubject.next(this.searchTerm);
   }
 
-  onCreateLigue(): void {
-    // TODO: Implement ligue creation
+  onEdit(id: number | undefined): void {
+    // TODO: Implement edit navigation
+    console.log('Navigation vers l\'édition de la ligue:', id);
   }
 
-  onEditLigue(id: number): void {
-    // TODO: Implement ligue editing
-  }
+  onDelete(id: number | undefined): void {
+    if (confirm('Êtes-vous sûr de vouloir supprimer cette ligue ?')) {
+      this.loading = true;
+      this.error = null;
 
-  onDeleteLigue(id: number): void {
-    // TODO: Implement ligue deletion
+      this.ligueService.deleteLigue(id?id:0)
+        .pipe(
+          catchError(error => {
+            console.error('Erreur lors de la suppression:', error);
+            this.error = 'Erreur lors de la suppression de la ligue';
+            return of(void 0);
+          })
+        )
+        .subscribe(() => {
+          this.loadLigues();
+        });
+    }
   }
 }

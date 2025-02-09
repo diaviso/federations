@@ -1,0 +1,189 @@
+<div class="ligue-form-container">
+  <div class="form-header">
+    <h2>Nouvelle Ligue</h2>
+    <p class="subtitle">Ajouter une nouvelle ligue à la fédération</p>
+  </div>
+
+  <form [formGroup]="ligueForm" (ngSubmit)="onSubmit()" class="ligue-form">
+    <div class="form-grid">
+      <!-- Informations principales -->
+      <div class="form-section">
+        <h3>Informations principales</h3>
+      
+          <!-- Logo Upload -->
+        <div class="form-section logo-section">
+            <h3>Logo</h3>
+            <div class="logo-upload">
+              <div class="logo-preview" *ngIf="logoPreview">
+                <img [src]="logoPreview" alt="Aperçu du logo">
+                <button type="button" class="btn-remove" (click)="removeLogo()">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <div class="upload-zone" 
+                   (dragover)="onDragOver($event)" 
+                   (dragleave)="onDragLeave($event)"
+                   (drop)="onDrop($event)"
+                   [class.dragging]="isDragging"
+                   [class.has-logo]="logoPreview">
+                <input 
+                  type="file" 
+                  #fileInput
+                  (change)="onFileSelected($event)"
+                  accept="image/*"
+                  style="display: none"
+                >
+                <div class="upload-content">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <p>Glissez votre logo ici ou</p>
+                  <button type="button" class="btn-upload" (click)="fileInput.click()">
+                    Choisir un fichier
+                  </button>
+                  <p class="file-info">PNG, JPG ou GIF (max. 2MB)</p>
+                </div>
+              </div>
+              <div class="error-message" *ngIf="logoError">
+                {{ logoError }}
+              </div>
+            </div>
+         </div>
+    
+        <div class="form-field">
+          <label for="nom">Nom de la ligue *</label>
+          <input 
+            id="nom" 
+            type="text" 
+            formControlName="nom"
+            [class.error]="nom?.invalid && nom?.touched"
+          >
+          <div class="error-message" *ngIf="nom?.invalid && nom?.touched">
+            <span *ngIf="nom?.errors?.['required']">Le nom est requis</span>
+            <span *ngIf="nom?.errors?.['minlength']">Le nom doit contenir au moins 3 caractères</span>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="date_creation">Date de création *</label>
+          <input 
+            id="date_creation" 
+            type="date" 
+            formControlName="date_creation"
+            [class.error]="date_creation?.invalid && date_creation?.touched"
+          >
+          <div class="error-message" *ngIf="date_creation?.invalid && date_creation?.touched">
+            <span *ngIf="date_creation?.errors?.['required']">La date de création est requise</span>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="description">Description *</label>
+          <textarea 
+            id="description" 
+            formControlName="description"
+            rows="3"
+            [class.error]="description?.invalid && description?.touched"
+          ></textarea>
+          <div class="error-message" *ngIf="description?.invalid && description?.touched">
+            <span *ngIf="description?.errors?.['required']">La description est requise</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div class="form-section">
+        <h3>Contact</h3>
+        
+        <div class="form-field">
+          <label for="president">Président *</label>
+          <input 
+            id="president" 
+            type="text" 
+            formControlName="president"
+            [class.error]="president?.invalid && president?.touched"
+          >
+          <div class="error-message" *ngIf="president?.invalid && president?.touched">
+            <span *ngIf="president?.errors?.['required']">Le président est requis</span>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="email">Email *</label>
+          <input 
+            id="email" 
+            type="email" 
+            formControlName="email"
+            [class.error]="email?.invalid && email?.touched"
+          >
+          <div class="error-message" *ngIf="email?.invalid && email?.touched">
+            <span *ngIf="email?.errors?.['required']">L'email est requis</span>
+            <span *ngIf="email?.errors?.['email']">L'email n'est pas valide</span>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="telephone">Téléphone *</label>
+          <input 
+            id="telephone" 
+            type="tel" 
+            formControlName="telephone"
+            [class.error]="telephone?.invalid && telephone?.touched"
+          >
+          <div class="error-message" *ngIf="telephone?.invalid && telephone?.touched">
+            <span *ngIf="telephone?.errors?.['required']">Le téléphone est requis</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Adresse -->
+      <div class="form-section">
+        <h3>Adresse</h3>
+        
+        <div class="form-field">
+          <label for="adresse">Adresse *</label>
+          <input 
+            id="adresse" 
+            type="text" 
+            formControlName="adresse"
+            [class.error]="adresse?.invalid && adresse?.touched"
+          >
+          <div class="error-message" *ngIf="adresse?.invalid && adresse?.touched">
+            <span *ngIf="adresse?.errors?.['required']">L'adresse est requise</span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="code_postal">Code postal *</label>
+            <input 
+              id="code_postal" 
+              type="text" 
+              formControlName="code_postal"
+              [class.error]="code_postal?.invalid && code_postal?.touched"
+            >
+            <div class="error-message" *ngIf="code_postal?.invalid && code_postal?.touched">
+              <span *ngIf="code_postal?.errors?.['required']">Le code postal est requis</span>
+              <span *ngIf="code_postal?.errors?.['pattern']">Le code postal doit contenir 5 chiffres</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   
+      <button type="button" class="btn-secondary" (click)="onCancel()">
+        Annuler
+      </button>
+   
+   
+      <button type="submit" class="btn-primary ml-auto " [disabled]="ligueForm.invalid || loading">
+        <i class="fas fa-spinner fa-spin" *ngIf="loading"></i>
+        {{ loading ? 'Création en cours...' : 'Créer la ligue' }}
+      </button>
+   
+  </form>
+
+  <div class="error-state" *ngIf="error">
+    <i class="fas fa-exclamation-circle"></i>
+    {{ error }}
+  </div>
+</div>
